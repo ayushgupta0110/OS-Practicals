@@ -149,15 +149,6 @@ void RR_scheduler(deque<Process> ready_queue,int num_processes)
 
         for(int j=0;j<TIME_QUANTUM;j++)
         {
-            // for(int i=0; i<num_processes; i++)
-            // {
-            //     // cout<<ready_queue[i].arrival_time<<" "<<current_time<<endl;
-            //     if((ready_queue[i].arrival_time == current_time) && (!ready_queue[i]._is_completed))
-            //     {
-            //         schedule_queue.push_back(&ready_queue[i]);
-            //     }
-            // }
-
             while(true)
             {
                 if((ready_queue[process_schedule_counter].arrival_time == current_time) && (!ready_queue[process_schedule_counter]._is_completed))
