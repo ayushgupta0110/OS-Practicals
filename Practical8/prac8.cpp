@@ -1,13 +1,13 @@
 #include <iostream>
 using namespace std;
 
-struct Pro
+struct Proc
 { 
    int pid;
    int bt;
 };
 
-void bubbleSort(Pro arr[], int n)
+void bubbleSort(Proc arr[], int n)
 {
    int i, j;
    for (i = 0; i < n-1; i++)
@@ -16,12 +16,12 @@ void bubbleSort(Pro arr[], int n)
               swap(arr[j], arr[j+1]);
 }
 
-bool comparison(Pro a, Pro b)
+bool comparison(Proc a, Proc b)
 {
      return (a.bt < b.bt);
 }
 
-void findWaitingTime(Pro p[], int n, int wt[])
+void findWaitingTime(Proc p[], int n, int wt[])
 {
     wt[0] = 0;
 
@@ -29,13 +29,13 @@ void findWaitingTime(Pro p[], int n, int wt[])
         wt[i] = p[i-1].bt + wt[i-1] ;
 }
 
-void findTurnAroundTime(Pro p[], int n, int wt[], int tat[])
+void findTurnAroundTime(Proc p[], int n, int wt[], int tat[])
 {
     for (int i = 0; i < n ; i++)
         tat[i] = p[i].bt + wt[i];
 }
 
-void findavgTime(Pro p[], int n)
+void findavgTime(Proc p[], int n)
 {
     int wt[n], tat[n], twt = 0, ttat = 0;
 
@@ -60,7 +60,7 @@ int main()
     int n;
     cout<<"\nShortest Job First Algorithm\n Enter the Number of Processes: ";
     cin>>n;
-    Pro *proc= new Pro[n];
+    Proc *proc= new Proc[n];
 	for(int i=0; i < n; i++)
 	{
         cout<<"\n Enter the Burst Time for Process "<< i+1<<": ";
