@@ -73,5 +73,6 @@ int main()
         cout << proc[i].pid <<" ";
 
     findavgTime(proc, n);
+    cout<<endl;
     return 0;
 }
