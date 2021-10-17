@@ -152,8 +152,11 @@ int main()
 {
     int num_of_process = 4;
     //param: PID, BurstTime, ArrivalTime
-
-	Process p1(1,5,0);
+    // Process p1(1,6,1);
+    // Process p2(2,3,3);
+    // Process p3(3,1,4);
+    // Process p4(6,7,5);
+    Process p1(1,5,0);
     Process p2(2,4,1);
     Process p3(3,2,2);
     Process p4(4,1,4);
