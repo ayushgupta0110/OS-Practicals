@@ -1,0 +1,153 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+#define MAX_REM_TIME 10000
+
+class Process
+{
+    public:
+    int burst_time;
+    int _PID_;
+    int arrival_time;
+    bool is_completed;
+    int start_time;
+    int completion_time;
+    int waiting_time;
+    int turn_around_time;
+    int remaining_burst;
+    
+
+    /**
+     * @param pid Process ID (int)
+     * @param b_time Process Burst Time (int)
+     * @param arr_time Process arrival time (int)
+    */
+    Process(int pid, int b_time, int arr_time)
+    {
+        burst_time       = b_time;
+        _PID_            = pid;
+        arrival_time     = arr_time;
+        is_completed    = false;
+        start_time       = 0;
+        completion_time  = 0;
+        waiting_time     = 0;
+        turn_around_time = 0;
+        remaining_burst  = burst_time;
+    }
+    
+    /**
+     * @brief after process is executed by CPU, set Values for the given process
+     * @current_time pointer to the current_time elapsed
+     * (pointer is required because we will update the value of current time at the end)
+    */
+    bool setInfo(int *current_time)
+    {
+        if(remaining_burst == burst_time)
+        {
+            start_time = *current_time;
+        }
+        remaining_burst--;
+        (*current_time)++;
+        if(remaining_burst==0)
+        {
+            is_completed     = true;
+            completion_time  = *current_time;
+            turn_around_time = completion_time  - arrival_time;
+            waiting_time     = turn_around_time - burst_time;
+        }
+        return is_completed;
+    }
+};
+
+inline float avgT(Process arr[],int n)
+{
+    float avg = 0;
+    for(int i=0; i<n; i++)
+        avg += arr[i].turn_around_time;
+    return (avg/n);
+}
+
+inline float avgW(Process arr[],int n)
+{
+    float avg = 0;
+    for(int i=0; i<n; i++)
+        avg += arr[i].waiting_time;
+    return (avg/n);
+}
+
+/**
+ * @brief display processes with their info
+ * @param ready_queue array of ready processes 
+ * @param num_proceseses number of processes in queue
+*/
+void process_display(Process ready_queue[], int num_processes)
+{
+    cout<<"\n"<<setw(65)<<"--SRTF SCHEDULING ALGORITHM--\n\n";
+    cout<<"\nProcesses\t\tCompletion Time\t\tTurn Around Time\tWaiting Time\n\n";
+    for(int i=0; i<num_processes; i++)
+    {
+        cout<<setw(5)<<"P"<<i+1<<setw(25)<<ready_queue[i].completion_time
+            <<setw(25)<<ready_queue[i].turn_around_time<<setw(21)<<ready_queue[i].waiting_time;
+        cout<<endl;
+    }
+    cout<<endl;
+	cout<<"Average"<<setw(25)<<"----"<<setw(25)<<avgT(ready_queue,num_processes)
+        <<setw(20)<<avgW(ready_queue,num_processes);
+    cout<<endl;
+}
+
+void SRTF_scheduler(Process ready_queue[],int num_processes)
+{
+    //Initially (t=0) all the processes are remaining to be exexuted
+    int process_left = num_processes;
+    int current_time = 0;
+    while(process_left>0)
+    {
+        //We initialize min_time container to a very large value to make comparison easy
+        int min_remaining_time =  MAX_REM_TIME;
+        /*time index container will store index of process with minimum time and will also work as switch
+        for determining if any process is present or not.*/
+        int min_time_index = -1;
+        for(int i=0; i<num_processes; i++)
+        {
+            if( (!ready_queue[i].is_completed) && (ready_queue[i].arrival_time <= current_time))
+            {
+                if(ready_queue[i].remaining_burst < min_remaining_time)
+                {
+                    min_time_index = i;
+                    min_remaining_time = ready_queue[i].remaining_burst;
+                }
+            }
+        }
+        //If no process is remaining in the current time
+        if(min_time_index == -1)
+        {
+            current_time++;
+            continue;
+        }
+
+        if(min_time_index == -1)
+        {
+            current_time++;
+            continue;
+        }
+    }
+    process_display(ready_queue,num_processes);
+}
+
+int main()
+{
+    int num_of_process = 4;
+    //param: PID, BurstTime, ArrivalTime
+    // Process p1(1,6,1);
+    // Process p2(2,3,3);
+    // Process p3(3,1,4);
+    // Process p4(6,7,5);
+	Process p1(1,5,0);
+    Process p2(2,4,1);
+    Process p3(3,2,2);
+    Process p4(4,1,4);
+
+    Process process_array[] = {p1,p2,p3,p4};
+    SRTF_scheduler(process_array,num_of_process);
+}  
