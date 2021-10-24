@@ -126,11 +126,7 @@ void SRTF_scheduler(Process ready_queue[],int num_processes)
             continue;
         }
 
-        if(min_time_index == -1)
-        {
-            current_time++;
-            continue;
-        }
+        if(ready_queue[min_time_index].setInfo(&current_time)) process_left--;
     }
     process_display(ready_queue,num_processes);
 }
