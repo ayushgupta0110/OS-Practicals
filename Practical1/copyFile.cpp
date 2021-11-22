@@ -20,15 +20,18 @@ int main()
     ifstream fin;
     ofstream fout;
     string input_file,output_file;
-    start:
-    cout<<"\n Enter the file name for reading: ";
-    cin>>input_file;
-    fin.open(input_file,ios::in);
-    if(!fin)
-    {
-        cout<<" Error! Can't open file, Please try again..."<<endl;
-        goto start;
-    }
+    while(true){
+		cout<<"\n Enter the file name for reading: ";
+		cin>>input_file;
+		fin.open(input_file,ios::in);
+		if(!fin)
+		{
+		    cout<<" Error! Can't open file, Please try again..."<<endl;
+		} 
+		else{
+			break;
+		}
+	}			
     cout<<"\n Enter the file name for writing: ";
     cin>>output_file;
     fout.open(output_file,ios::out);

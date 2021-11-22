@@ -31,7 +31,6 @@ int main(int argc, char **argv)
 			cout<<"File size :";
 			cout<<s.st_size<<"\n";
 			
-			//displayPermissions(s);
             		cout<<"Permissions: ";
 			
 		     //for OWNER
